@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head">
+</head>
+<body>
+<header th:replace="common::header">
+</header>
+  <div class="articleContant">
+    <div class="wrapper row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 row articleShow">
+        <h1 th:text="${article.title}"></h1>
+        <div class="articleFooter articleHead">
+          <ul>
+            <li><i class="fa fa-calendar fa-1x" aria-hidden="true"></i><span th:text="${ #dates.format(article.createdDate,'yyyy-MM-dd')}">)</span></li>
+            <li><i class="fa fa-eye" aria-hidden="true"></i><span th:text="${article.commentCount}"></span></li>
+            <li><i class="fa fa-list fa-1x" aria-hidden="true"></i><span th:text="${article.category}"></span></li>
+            <li><i class="fa fa-tags fa-1x" aria-hidden="true"></i>
+              #foreach($tag in $tags)
+              <span>$!{tag.name}</span>
+              #end
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <div class="article" >
+            <div class="markdown-body editormd-preview-container" th:utext="${article.content}">
+            </div>
+        </div>
+        <hr>
+        <div class="likeWrapper row">
+          <div class="col-md-3 col-md-offset-5 likeDisLike">
+            <div class="like">
+              <!--#if($liked > 0)
+              <div><a style="color:#337ab7;"><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
+              #else-->
+              <div><a href="/like/$!{article.id}"><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
+              <div class="likeCount">赞</div>
+            </div>
+            <div class="dislike">
+              <!--#if($liked < 0)
+              <div><a style="color:#337ab7;"><i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i></a></div>
+              #else-->
+              <div><a href="/dislike/$!{article.id}"><i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i></a></div>
+              <div class="disLikeCount">踩</div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="title"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i><span>已有$!{commentsCount}条评论</span></div>
+        <hr>
+        <div class="commentList">
+          <ul th:each="comment:${commentList}">
+            <li>
+              <div class="comment">
+                <div class="commentTop row">
+                  <div class="commentLeft col-md-1">
+                    <div class="photo"><a href=""><img src="$!{vo.user.headUrl}" alt=""></a></div>
+                    <div class="comment-author">$!{vo.user.name}</div>
+                  </div>
+                  <div class="commentContent col-md-9"><span th:text="${comment.content}">$!{vo.comment.content}</span></div>
+                </div>
+                <div class="commentFooter">
+                  <div class="commentDate"><span th:text="${ #dates.format(comment.createdDate,'yyyy-MM-dd')}">发布于 $date.format('yyyy-MM-dd HH:mm:ss', $!{vo.comment.createdDate})</span></div>
+                  <div class="answer"><a href="">回复</a></div>
+                </div>
+              </div>
+            </li>
+            <hr>
+          </ul>
+        </div>
+        <div class="title"><i class="fa fa-edit fa-2x" aria-hidden="true"></i><span>添加新评论</span></div>
+        <hr>
+        <div class="commentWapper row">
+          <div class="editComment col-md-11">
+            <form action="/addComment/$!{article.id}"  method = "get">
+              <textarea name="content" id="content" style="font-style: italic;width:100%;height: 115px"></textarea>
+              <button  type="submit" class="btn btn-default">提交评论</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<footer th:replace="common::footer">
+ </footer>
+</body>
+</html>

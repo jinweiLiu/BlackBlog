@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head">
+</head>
+<body>
+<header th:replace="common::header">
+</header>
+  <div class="contant">
+    <div class="wrapper row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 row">
+        <div class="col-md-9 leftSection">
+          <ul class="articles" th:each="article:${articleList}">
+              <li class="blogAticle">
+                <div class="articleHeader">
+                  <p><a th:href="@{/article/id?(articleId=${article.id})}" th:text="${article.title}"></a></p>
+                </div>
+                <div class="articleContent">
+                  <p th:text="${article.describes}"></p>
+                </div>
+                <div class="articleFooter">
+                  <ul>
+                    <li><i class="fa fa-calendar" aria-hidden="true"></i><span th:text="${ #dates.format(article.createdDate,'yyyy-MM-dd')}"></span></li>
+                    <li><i class="fa fa-eye" aria-hidden="true"></i><span th:text="${article.commentCount}"></span></li>
+                    <li><i class="fa fa-list" aria-hidden="true"></i><span th:text="${article.category}"></span></li>
+                    <li><i class="fa fa-tags" aria-hidden="true"></i>
+                      <span>$!{tag.name}</span>
+                    </li>
+                    <li class="readMore"><a th:href="@{/article/id?(articleId=${article.id})}">read more</a></li>
+                  </ul>
+                </div>
+              </li>
+          </ul>
+          <div class="paginationWapper">
+            <ul class="pagination">
+              <li>
+                <a href="/page/$!{pagination.prePage}">&laquo;</a>
+              </li>
+              <li class="disabled">
+                <a href="">&laquo;</a>
+              </li>
+              <li><a href="">1</a></li>
+              <li>
+                <a href="/page/$!{pagination.nextPage}">&raquo;</a>
+              </li>
+              <li class="disabled">
+                <a href="">&raquo;</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3 rightSection">
+          <div class="side categories">
+            <div class="header"><i class="fa fa-list-ul" aria-hidden="true"></i><span>Categories</span></div>
+            <ul>
+              <li><a href="/category/Java?pageId=1">Java</a><span th:text="${category.get('JAVA')}"></span></li>
+              <li><a href="/category/Web?pageId=1">Web</a><span th:text="${category.get('Web')}"></span></li>
+              <li><a href="/category/Linux?pageId=1">Linux</a><span th:text="${category.get('Linux')}"></span></li>
+              <li><a href="/category/Network?pageId=1">计算机网络</a><span th:text="${category.get('Network')}"></span></li>
+              <li><a href="/category/Database?pageId=1">数据库</a><span th:text="${category.get('Database')}"></span></li>
+              <li><a href="/category/Algorithm?pageId=1">算法</a><span th:text="${category.get('Algorithm')}"></span></li>
+              <li><a href="/category/Other?pageId=1">其它</a><span th:text="${category.get('Other')}"></span></li>
+            </ul>
+          </div>
+          <div class="side tags">
+            <div class="header"><i class="fa fa-tags" aria-hidden="true"></i><span>Tags</span></div>
+            <div id="tagCloud">
+              <a href="/tag/$!{tag.id}?pageId=1" rel="$!{tag.count}">$!{tag.name}</a>
+            </div>
+          </div>
+          <div class="side hotArticles">
+            <div class="header"><i class="fa fa-file-text" aria-hidden="true"></i><span>HotArticles</span></div>
+            <ul>
+              <li><a href="/article/$!{hotArticle.id}">$str...</a></li>
+              <li><a href="/article/$!{hotArticle.id}">$str</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<footer th:replace="common::footer">
+</footer>
+</body>
+</html>

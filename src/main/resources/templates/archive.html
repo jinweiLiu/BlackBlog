@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../static/css/bootstrap-tokenfield.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/editormd.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="row">
+    <div class="col-md-2 col-md-offset-1 row logo"><a href="/index">tuzhenyu</a></div>
+    <div class="col-md-5 col-md-offset-4 navigation">
+        <ul class="row">
+            <li class="col-md-2"><a id="home" href="/index"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+            <li class="col-md-2"><a id="project" href="/archive"><i class="fa fa-server" aria-hidden="true"></i>Archive</a></li>
+            <li class="col-md-2"><a id="life" href="/about"><i class="fa fa-heart" aria-hidden="true"></i>About</a></li>
+            <li class="col-md-2"><a id="about" href="/links"><i class="fa fa-th-large" aria-hidden="true"></i>Links</a></li>
+            #if($create > 0)
+            <li class="col-md-2"><a id="create" href="/create"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+            #end
+        </ul>
+    </div>
+</header>
+<div class="articleContant">
+    <div class="wrapper row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 row articleShow">
+            <h1>Archives</h1>
+            <hr>
+            #foreach($vo in $vos)
+                <h2>$!{vo.date}</h2>
+                <ul>
+                    #foreach($archive in $vo.list)
+                    <li><a href="/article/$!{archive.articleId}">$!{archive.articleTitle}</a></li>
+                    #end
+                </ul>
+            #end
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="row">
+        <div class="col-md-1 col-md-offset-5 author"><span>@Black的博客</span></div>
+        <ul class="col-md-3 row">
+            <div class="col-md-1"><a href="http://weibo.com/2108395461"><i class="fa fa-weibo" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="https://github.com/zhenyutu"><i class="fa fa-github" aria-hidden="true"></i></a></div>
+        </ul>
+    </div>
+    <div class="power"><p><span>本站总阅读量$!{clickCount.sumPage}次</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>本文总阅读量$!{clickCount.currentPage}次</span></p></div>
+</footer>
+<script src="../static/js/jquery-1.11.1.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/bootstrap-tokenfield.min.js"></script>
+<script src="../static/js/editormd.min.js"></script>
+<script src="../static/js/jquery.tagcloud.js"></script>
+<script src="../static/js/style.js"></script>
+</body>
+</html>

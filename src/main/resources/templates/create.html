@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head">
+</head>
+<body>
+<header th:replace="common::header">
+</header>
+<div id="layout">
+    <form action="#" th:action="@{/article/articleAdd}" th:object="${article}" method = "post">
+        <div class="title option"><label>Title</label><input type="text" class="form-control" id="title" name="article.title" th:field="${article.title}"></div>
+        <div class="row categoryTag">
+            <div class="col-md-6"><div><label>Category</label></div>
+                <select  class="form-control" id="category"  name="article.category" th:field="${article.category}">
+                    <option value="JAVA">JAVA</option>
+                    <option value="Web">Web</option>
+                    <option value="Linux">Linux</option>
+                    <option value="Network">计算机网络</option>
+                    <option value="Database">数据库</option>
+                    <option value="Algorithm">算法</option>
+                    <option value="Other">其他</option>
+                </select>
+            </div>
+            <div class="col-md-6"><label>Tag</label><input type="text" class="form-control" id="tag" name="tag" th:field="${tag}"></div>
+        </div>
+        <div class="describe option"><label>Describe</label><input type="text" class="form-control" id="describe" name="article.describe" th:field="${article.describes}"></div>
+        <div class="option"><label>Content</label></div>
+        <div class="row">
+            <div id="test-editormd">
+                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc" id="content"></textarea>
+                <textarea class="editormd-html-textarea" name="editormd-html-textarea" id="htmlContent" th:field="${article.content}"></textarea>
+            </div>
+        </div>
+        <div class="form-group articleSubmit option">
+             <div style="text-align: center">
+             <button  type="submit" class="btn btn-default">Submit</button>
+             </div>
+        </div>
+    </form>
+</div>
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script th:src="@{/js/editormd.min.js}"></script>
+<script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width   : "90%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "/lib/",
+            saveHTMLToTextarea : true
+        });
+    });
+</script>
+<footer>
+    <div class="row">
+        <ul class="col-md-4 col-md-offset-5 row">
+            <div class="col-md-1"><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></div>
+            <div class="col-md-1"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></div>
+        </ul>
+    </div>
+    <div class="power"><p>@刘金伟的博客</p></div>
+</footer>
+</body>
+</html>
