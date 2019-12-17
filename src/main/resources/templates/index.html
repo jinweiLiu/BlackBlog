@@ -10,23 +10,23 @@
       <div class="col-md-1"></div>
       <div class="col-md-10 row">
         <div class="col-md-9 leftSection">
-          <ul class="articles" th:each="article:${articleList}">
+          <ul class="articles" th:each="articleDto:${articleDtos}">
               <li class="blogAticle">
                 <div class="articleHeader">
-                  <p><a th:href="@{/article/id?(articleId=${article.id})}" th:text="${article.title}"></a></p>
+                  <p><a th:href="@{/article/id?(articleId=${articleDto.article.id})}" th:text="${articleDto.article.title}"></a></p>
                 </div>
                 <div class="articleContent">
-                  <p th:text="${article.describes}"></p>
+                  <p th:text="${articleDto.article.describes}"></p>
                 </div>
                 <div class="articleFooter">
                   <ul>
-                    <li><i class="fa fa-calendar" aria-hidden="true"></i><span th:text="${ #dates.format(article.createdDate,'yyyy-MM-dd')}"></span></li>
-                    <li><i class="fa fa-eye" aria-hidden="true"></i><span th:text="${article.commentCount}"></span></li>
-                    <li><i class="fa fa-list" aria-hidden="true"></i><span th:text="${article.category}"></span></li>
-                    <li><i class="fa fa-tags" aria-hidden="true"></i>
-                      <span>$!{tag.name}</span>
+                    <li><i class="fa fa-calendar" aria-hidden="true"></i><span th:text="${#dates.format(articleDto.article.createdDate, 'yyyy-MM-dd')}"></span></li>
+                    <li><i class="fa fa-eye" aria-hidden="true"></i><span th:text="${articleDto.clickCount}"></span></li>
+                    <li><i class="fa fa-list" aria-hidden="true"></i><span th:text="${articleDto.article.category}"></span></li>
+                    <li th:each="tag:${articleDto.tag}"><i class="fa fa-tags" aria-hidden="true"></i>
+                      <span th:text="${tag.name}">$!{tag.name}</span>
                     </li>
-                    <li class="readMore"><a th:href="@{/article/id?(articleId=${article.id})}">read more</a></li>
+                    <li class="readMore"><a th:href="@{/article/id?(articleId=${articleDto.article.id})}">read more</a></li>
                   </ul>
                 </div>
               </li>

@@ -28,4 +28,8 @@ public class ArticleService {
     public int insertArticle(Article article){
         return articleMapper.insertArticle(article)>0 ? article.getId() : 0;
     }
+
+    public  List<Article> selectLatestArticles(int offset,int limit){
+        return articleMapper.selectLatestArticles(offset,limit);
+    }
 }

@@ -18,6 +18,9 @@ public interface ArticleMapper {
     @Select("select id,title, describes, content, created_Date as createdDate, comment_Count as commentCount, category from article")
     List<Article> getAll();
 
+    @Select("select id,title, describes, content, created_Date as createdDate, comment_Count as commentCount, category from article order by id desc limit #{offset},#{limit}")
+    List<Article> selectLatestArticles(@Param("offset") int offset, @Param("limit") int limit);
+
     @Select("select count(id) from article where category = #{category}")
     int getCategoryCount(@Param("category")String category);
 
