@@ -1,10 +1,7 @@
 package com.blog.ljw.firstbolg.persistence;
 
 import com.blog.ljw.firstbolg.pojo.Article;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,5 +26,9 @@ public interface ArticleMapper {
 
     @Insert({"insert into",TABLE_NAEM,"(",INSERT_FIELDS,") values (#{title},#{describes},#{content}" +
             ",#{createdDate},#{commentCount},#{category})"})
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     int insertArticle(Article article);
+
+    @Select("select count(*) from article")
+    int getArticleCount();
 }

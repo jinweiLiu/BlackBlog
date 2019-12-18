@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,10 +57,10 @@ public class ArticleController {
     }
 
     @PostMapping("/article/articleAdd")
-    public String AddArticle(@ModelAttribute("article") Article article,@ModelAttribute("tag") String tag){
+    public ModelAndView AddArticle(@ModelAttribute("article") Article article, @RequestParam(name="tag") String tag){
         Date date = new Date();
         article.setCreatedDate(date);
-        articleService.insertArticle(article);
+        int articleId = articleService.insertArticle(article);
 
         String []tags = tag.split("，");
         for(String tagName : tags){
@@ -69,17 +71,19 @@ public class ArticleController {
                 int newTagId = tagService.addTag(newTag);
 
                 ArticleTag articleTag = new ArticleTag();
-                articleTag.setArticleId(article.getId());
+                articleTag.setArticleId(articleId);
                 articleTag.setTagId(newTagId);
                 tagService.addArticleTag(articleTag);
             }else{
                 tagService.updateCount(tagService.selectByName(tagName).getId(),tagService.selectByName(tagName).getCount()+1);
                 ArticleTag articleTag = new ArticleTag();
                 articleTag.setTagId(tagService.selectByName(tagName).getId());
-                articleTag.setArticleId(article.getId());
+                articleTag.setArticleId(articleId);
                 tagService.addArticleTag(articleTag);
             }
         }
-        return "create";
+        ModelAndView  model = new ModelAndView("/create");
+        model.addObject("message", "保存成功");
+        return model;
     }
 }

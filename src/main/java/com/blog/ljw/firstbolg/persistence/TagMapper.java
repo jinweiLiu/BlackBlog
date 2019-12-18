@@ -12,6 +12,7 @@ public interface TagMapper {
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
     @Insert({"insert into",TABLE_NAEM,"(",INSERT_FIELDS,") values (#{name},#{count})"})
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     int insertTag(Tag tag);
 
     @Select({"select",SELECT_FIELDS,"from",TABLE_NAEM,"where name=#{name}"})

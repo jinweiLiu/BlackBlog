@@ -32,4 +32,8 @@ public class ArticleService {
     public  List<Article> selectLatestArticles(int offset,int limit){
         return articleMapper.selectLatestArticles(offset,limit);
     }
+
+    public int getArticleCount(){
+        return articleMapper.getArticleCount();
+    }
 }
