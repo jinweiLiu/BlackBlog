@@ -1,14 +1,11 @@
 package com.blog.ljw.firstbolg.controller;
 
-import com.blog.ljw.firstbolg.dto.ArticleDto;
 import com.blog.ljw.firstbolg.dto.PaginationDto;
 import com.blog.ljw.firstbolg.pojo.Article;
 import com.blog.ljw.firstbolg.pojo.Category;
-import com.blog.ljw.firstbolg.pojo.Tag;
 import com.blog.ljw.firstbolg.service.ArticleService;
 import com.blog.ljw.firstbolg.service.PaginationService;
 import com.blog.ljw.firstbolg.service.RedisService;
-import com.blog.ljw.firstbolg.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class IndexController {
@@ -27,6 +25,9 @@ public class IndexController {
     @Autowired
     private PaginationService paginationService;
 
+    @Autowired
+    private RedisService redisService;
+
     @GetMapping("/")
     public String Index(@RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "4") Integer size,
@@ -34,12 +35,15 @@ public class IndexController {
         PaginationDto pagination = paginationService.getPages(page,size);
         model.addAttribute("pagination",pagination);
 
-        String []categoryName = {"JAVA","Web","Linux","Network","Database","Algorithm","Other"};
-        Category category = new Category();
-        for(String name:categoryName){
-            category.set(name,articleService.getCategoryCount(name));
-        }
+        Category category = articleService.getCategory();
         model.addAttribute("category",category);
+
+        List<Article> hotArticles = new ArrayList<>();
+        Set<String> set =  redisService.zrevenge(0,6);
+        for(String hot : set){
+            hotArticles.add(articleService.getArticlById(hot));
+        }
+        model.addAttribute("hotArticles",hotArticles);
         return "index";
     }
 
@@ -58,12 +62,4 @@ public class IndexController {
         return "category";
     }
 
-    @GetMapping("/create")
-    public String create(Model model){
-        Article article = new Article();
-        model.addAttribute("article",article);
-        String tag = "";
-        model.addAttribute("tag",tag);
-        return "create";
-    }
 }

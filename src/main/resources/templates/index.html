@@ -79,15 +79,14 @@
           </div>
           <div class="side tags">
             <div class="header"><i class="fa fa-tags" aria-hidden="true"></i><span>Tags</span></div>
-            <div id="tagCloud">
-              <a href="/tag/$!{tag.id}?pageId=1" rel="$!{tag.count}">$!{tag.name}</a>
+            <div id="tagCloud" th:each="tag:${pagination.tags}">
+              <a href="/tag/" th:rel="${tag.count}" th:text="${tag.name}"></a>
             </div>
           </div>
           <div class="side hotArticles">
             <div class="header"><i class="fa fa-file-text" aria-hidden="true"></i><span>HotArticles</span></div>
-            <ul>
-              <li><a href="/article/$!{hotArticle.id}">$str...</a></li>
-              <li><a href="/article/$!{hotArticle.id}">$str</a></li>
+            <ul th:each="hotArticle:${hotArticles}">
+              <li><a th:href="@{/article/id?(articleId=${hotArticle.id})}" th:text="${hotArticle.title}">$str...</a></li>
             </ul>
           </div>
         </div>

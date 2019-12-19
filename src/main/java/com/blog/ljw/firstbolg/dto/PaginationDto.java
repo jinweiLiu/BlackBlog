@@ -1,5 +1,6 @@
 package com.blog.ljw.firstbolg.dto;
 
+import com.blog.ljw.firstbolg.pojo.Tag;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class PaginationDto {
     private Integer page;
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
+    private List<Tag> tags;
 
     public void setPagination(Integer totalPage, Integer page) {
         this.totalPage = totalPage;

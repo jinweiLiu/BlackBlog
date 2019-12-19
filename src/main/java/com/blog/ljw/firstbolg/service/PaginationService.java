@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Service
@@ -23,6 +24,9 @@ public class PaginationService {
 
     @Autowired
     private ArticleTagMapper articleTagMapper;
+
+    @Autowired
+    private TagService tagService;
 
     public PaginationDto getPages(int page, int size){
         PaginationDto paginationDto = new PaginationDto();
@@ -45,20 +49,24 @@ public class PaginationService {
         List<Article> articleList = articleMapper.selectLatestArticles(offset,size);
         //包含article、click和tag
         List<ArticleDto> articleDtos = new ArrayList<>();
+        List<Tag> paginationTags = new ArrayList<>();
         for(Article article:articleList){
             ArticleDto articleDto = new ArticleDto();
             articleDto.setArticle(article);
-            String clicks = redisUtil.get(String.valueOf(article.getId()));
+            String clicks = redisUtil.get(String.valueOf(article.getId())).split(":")[0];
             if(clicks == null){
                 articleDto.setClickCount("0");
             }else{
                 articleDto.setClickCount(clicks);
             }
             List<Tag> tags= articleTagMapper.selectByArticleId(article.getId());
+            paginationTags.addAll(tags);
             articleDto.setTag(tags);
             articleDtos.add(articleDto);
         }
         paginationDto.setData(articleDtos);
+        paginationTags = new ArrayList<Tag>(new LinkedHashSet<>(paginationTags));
+        paginationDto.setTags(paginationTags);
         return paginationDto;
     }
 }

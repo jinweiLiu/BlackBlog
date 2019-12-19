@@ -2,6 +2,7 @@ package com.blog.ljw.firstbolg.service;
 
 import com.blog.ljw.firstbolg.persistence.ArticleMapper;
 import com.blog.ljw.firstbolg.pojo.Article;
+import com.blog.ljw.firstbolg.pojo.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,14 @@ public class ArticleService {
 
     public int getArticleCount(){
         return articleMapper.getArticleCount();
+    }
+
+    public Category getCategory(){
+        String []categoryName = {"JAVA","Web","Linux","Network","Database","Algorithm","Other"};
+        Category category = new Category();
+        for(String name:categoryName){
+            category.set(name,articleMapper.getCategoryCount(name));
+        }
+        return  category;
     }
 }

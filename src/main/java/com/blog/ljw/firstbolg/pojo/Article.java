@@ -17,6 +17,5 @@ public class Article {
     @Override
     public String toString(){
         return id+title+describes;
-        //System.out.println(id+title+describes);
     }
 }

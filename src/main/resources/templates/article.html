@@ -32,8 +32,8 @@
               <!--#if($liked > 0)
               <div><a style="color:#337ab7;"><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
               #else-->
-              <div><a href="/like/$!{article.id}"><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
-              <div class="likeCount">赞</div>
+              <div class="testlike"><a><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
+              <div class="likeCount" th:text="${likeCount}">赞</div>
             </div>
             <div class="dislike">
               <!--#if($liked < 0)
@@ -80,6 +80,29 @@
       </div>
     </div>
   </div>
+<script th:inline="javascript">
+$(".like").click(function () {
+    var name = $.cookie("articleLike");
+    if(name == ""){
+        $.ajax({
+           async: false,
+           type:"POST",
+           url:"/article/like",
+           data: {articleId:[[${article.id}]]},
+           dataType:"json",
+           success:function (data) {
+               $(".likeCount").html("赞 "+data);
+               $(".testlike").html("<a style=\"color:#337ab7;\"><i class=\"fa fa-thumbs-o-up fa-3x\" aria-hidden=\"true\"></i></a>");
+               $.cookie("articleLike",[[${article.id}]]);
+           },
+           error:function()
+           {
+               alert("获取数据出错!");
+           },
+         });
+    }
+ });
+</script>
 <footer th:replace="common::footer">
  </footer>
 </body>

@@ -14,6 +14,7 @@
     <script th:src="@{/js/editormd.min.js}"></script>
     <script th:src="@{/js/jquery.tagcloud.js}"></script>
     <script th:src="@{/js/style.js}"></script>
+    <script th:src="@{/js/jquery.cookie.js}"></script>
 </head>
 
 <header th:fragment="header">
@@ -25,7 +26,7 @@
             <li class="col-md-2"><a id="project" href="/archive"><i class="fa fa-server" aria-hidden="true"></i>Archive</a></li>
             <li class="col-md-2"><a id="life" href="/about"><i class="fa fa-heart" aria-hidden="true"></i>About</a></li>
             <li class="col-md-2"><a id="about" href="/userid"><i class="fa fa-user" aria-hidden="true"></i>User</a></li>
-            <li th:if="${session.account!=null}" class="col-md-2"><a id="create" href="/create"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+            <li th:if="${session.account!=null}" class="col-md-2"><a id="create" th:href="@{/create}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
         </ul>
     </div>
     </div>
