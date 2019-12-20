@@ -29,16 +29,10 @@
         <div class="likeWrapper row">
           <div class="col-md-3 col-md-offset-5 likeDisLike">
             <div class="like">
-              <!--#if($liked > 0)
-              <div><a style="color:#337ab7;"><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
-              #else-->
               <div class="testlike"><a><i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i></a></div>
               <div class="likeCount" th:text="${likeCount}">赞</div>
             </div>
             <div class="dislike">
-              <!--#if($liked < 0)
-              <div><a style="color:#337ab7;"><i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i></a></div>
-              #else-->
               <div><a href="/dislike/$!{article.id}"><i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i></a></div>
               <div class="disLikeCount">踩</div>
             </div>
@@ -93,7 +87,7 @@ $(".like").click(function () {
            success:function (data) {
                $(".likeCount").html("赞 "+data);
                $(".testlike").html("<a style=\"color:#337ab7;\"><i class=\"fa fa-thumbs-o-up fa-3x\" aria-hidden=\"true\"></i></a>");
-               $.cookie("articleLike",[[${article.id}]]);
+               $.cookie("articleLike",[[${article.id}]], { path:'/', expires: 10 });
            },
            error:function()
            {

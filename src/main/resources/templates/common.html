@@ -25,7 +25,8 @@
             <li class="col-md-2"><a id="home" th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
             <li class="col-md-2"><a id="project" href="/archive"><i class="fa fa-server" aria-hidden="true"></i>Archive</a></li>
             <li class="col-md-2"><a id="life" href="/about"><i class="fa fa-heart" aria-hidden="true"></i>About</a></li>
-            <li class="col-md-2"><a id="about" href="/userid"><i class="fa fa-user" aria-hidden="true"></i>User</a></li>
+            <li class="col-md-2" th:if="${session.user==null}"><a id="about" th:href="@{https://github.com/login/oauth/authorize?client_id=e335ff8bb4d93e79e232&redirect_uri=http://localhost:8080/callback&scope=user&state=1}"><i class="fa fa-user" aria-hidden="true"></i>Login</a></li>
+            <li class="col-md-2" th:if="${session.user!=null}"><a href="#"><img class="img-rounded"th:src="${session.user.avatarUrl}" height="20" width="20" th:text="${session.user.name}"></a></li>
             <li th:if="${session.account!=null}" class="col-md-2"><a id="create" th:href="@{/create}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
         </ul>
     </div>

@@ -59,12 +59,14 @@ public class ArticleController {
         boolean flag = true;  //有问题
         Cookie[]cookies = request.getCookies();
         for(Cookie c:cookies){
-            if(c.getName() == "articleLike") flag = false;
+            if(c.getName().equals("articleLike")) {
+                flag = false;
+            }
         }
-        System.out.println(flag);
         if(flag){
             Cookie cookie = new Cookie("articleLike",null);
-            cookie.setMaxAge(60 * 60 * 24 * 7);
+            cookie.setMaxAge(60 * 60 * 24 * 10);
+            cookie.setPath("/");
             response.addCookie(cookie);
         }
 

@@ -56,3 +56,17 @@ $(".like").click(function () {
  });
 </script>
 ```
+
+6、刷新后cookie消失
+
+1）设置cookie的路径为“/”
+
+2）跨域问题
+
+关于判断某个cookie是否存在，使用“==”判断会失效，要使用equal方法
+
+7、GitHub授权登录
+
+参考了码匠社区的相关代码，GitHub上有使用的详细说明。
+
+引入了okhttp，是之前未接触到的
