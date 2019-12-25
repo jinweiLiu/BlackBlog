@@ -39,7 +39,7 @@
           </div>
         </div>
         <hr>
-        <div class="title"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i><span>已有$!{commentsCount}条评论</span></div>
+        <div class="title"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i><span th:text="已有+${article.commentCount}+条评论">已有$!{commentsCount}条评论</span></div>
         <hr>
         <div class="commentList">
           <ul th:each="comment:${commentList}">
@@ -65,8 +65,8 @@
         <hr>
         <div class="commentWapper row">
           <div class="editComment col-md-11">
-            <form action="/addComment/$!{article.id}"  method = "get">
-              <textarea name="content" id="content" style="font-style: italic;width:100%;height: 115px"></textarea>
+            <form th:action="@{/article/commentAdd?(articleId=${article.id})}"  method = "post">
+              <textarea name="content" id="content" style="font-style: italic;width:100%;height: 115px" th:value="${content}"></textarea>
               <button  type="submit" class="btn btn-default">提交评论</button>
             </form>
           </div>

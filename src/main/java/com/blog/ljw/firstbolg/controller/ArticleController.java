@@ -126,6 +126,12 @@ public class ArticleController {
         redisService.getAndset(articleId,1);
         String articleCache = String.valueOf(likeCount);
         return articleCache;
+
     }
 
+    @PostMapping("/article/commentAdd")
+    public String addComment(@RequestParam("articleId") String articleId, @RequestParam("content") String content){
+        System.out.println(content);
+        return "redirect:/article/id?articleId="+articleId;
+    }
 }
